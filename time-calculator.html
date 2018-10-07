@@ -1,12 +1,24 @@
 <html>
 <head>
+    <script src="js/time-calculator.js"></script>
 </head>
 <body>
     <h1>Time Calculator!</h1>
     <p>Calculates the difference between two different times.</p>
-    Time #1: <input type="time" id="time-1"><br>
-    Time #2: <input type="time" id="time-2"><br><br>
-    <button type="submit">Calculate!</button>
+    Time #1: <input type="time" id="time-1">
+    <select id="time-1-select">
+        <option value="today">Today</option>
+        <option value="tomorrow">Tomorrow</option>
+    </select>
+    <button>Use current time</button>
+    <br>
+    Time #2: <input type="time" id="time-2">
+    <select id="time-1-select">
+        <option value="today">Today</option>
+        <option value="tomorrow">Tomorrow</option>
+    </select><br><br>
+    
+    <button type="submit" id="submit" onclick="test();">Calculate!</button>
     
 </body>
 </html>

@@ -1,60 +1,80 @@
-/*
-OK, so, since there is input type of time, which I was unaware of, we will have to reconstruct this entire function to become a stack that watches out for colon.
-
-Additionally, PM just converts the value returned to military time which may prove to be useful.
-*/
-
 class Time {
-  constructor(hour,minute,meridian)  {
-      this.hour = hour;
-      this.minute = minute;
-      this.meridian = meridian;
-  }
+    
+    constructor(time)  {  
+      var holder;
+      var flag = false; //Turns to true once : is passed
+      
+      //Initialize time and minute variables to avoid a string with 'undefined'
+      this.hour = ""; 
+      this.minute = "";
+      
+      //For loop to go through every character
+      for (var i = 0; i < time.length; i++) {
+          if (time[i] != ':') {
+            if (flag) {
+                this.minute += time[i];
+            }
+            else {
+                this.hour += time[i];
+            }
+          }
+          else {
+              flag = true;
+          }
+      }
+      
+      //Parse hour and min variables to integer values
+      this.minute = parseInt(this.minute);
+      this.hour = parseInt(this.hour);
+    }
+    
+    get getDiff() {
+        
+        if (this.hour < 10) {
+            this.hour = "0" + this.hour;
+        }
+        if (this.minute < 10) {
+            this.minute = "0" + this.minute;
+        }
+        
+        return this.hour + ':' + this.minute;
+    }
+    
 };
+
 
 function calculate() {
     
     //Exception: Is empty
-    throw (isEmpty)
-    
-    /*
-    Handle:
-    alert("Fields cannot be empty!");
-    */
     
     var temp1;
     var temp2;
     
-    //Convert all strings to int and store into variables
-    var time_1_hour = parseInt(document.getElementById("time_1_hour").value);
-    var time_1_minute = parseInt(document.getElementById("time_1_minute").value);
-    var time_2_hour = parseInt(document.getElementById("time_2_hour").value);
-    var time_2_minute = parseInt(document.getElementById("time_2_minute").value);
-    
+    debugger;
     
     //Store into data structure
-    time_1 = new Time(time_1_hour, time_1_minute, time_1_meridian);
-    time_2 = new Time(time_2_hour, time_2_minute, time_2_meridian);
+    time_1 = new Time(document.getElementById("time-1").value);
+    time_2 = new Time(document.getElementById("time-2").value);
     
-    //Hour adjustment
-    if (time_1.meridian !== time_2.meridian) {
-        time_2.hour += 12; //Have to rethink this in case it's 9AM to 12PM or 9AM to 1PM...
-    }
+    //Hour adjustment - do this later, check functionality first
     
     //Convert to minutes
     temp1 = (time_1.hour * 60) + time_1.minute;
     temp2 = (time_2.hour * 60) + time_2.minute;
     
     //Calculation
-    temp1 = time_2 - time_1;
+    temp1 = temp2 - temp1;
     
     //Use calculation result to adjust numbers
     time_1.hour = Math.floor(temp1/60);
     time_1.minute = temp1 % 60;
     time_1.meridian = undefined;
     
-    //Return Time
-    return time_1;
-    
     //Automatic deallocation of all variables
+}
+
+
+function test() {
+    calculate();
+    window.alert("Difference between two times is " + time_1.getDiff);
 }
