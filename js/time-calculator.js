@@ -1,4 +1,4 @@
-class Time {
+class my_time {
     
     constructor(time)  {  
       var holder;
@@ -44,7 +44,7 @@ function calculate() {
     
     //Store into data structure
     for (i = 0; i < times_nodes.length; i++) {
-        times[i] = new Time(times_nodes[i].value);
+        times[i] = new my_time(times_nodes[i].value);
     }
     
     //Fix numbers according to whether today is true or false (+24)
@@ -56,9 +56,9 @@ function calculate() {
     
     //Error handling: If time1 > time 2
     if (times[0].hour > times[1].hour) {
-        throw "ERROR: Time #1 cannot be greater than Time #2!";
+        throw "ERROR: my_time #1 cannot be greater than my_time #2!";
     } else if (times[0].hour == times[1].hour && times[0].minute > times[1].minute) {
-        throw "ERROR: Time #1 cannot be greater than Time #2!";
+        throw "ERROR: my_time #1 cannot be greater than my_time #2!";
     }
     
     
