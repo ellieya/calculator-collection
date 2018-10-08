@@ -26,55 +26,80 @@ class Time {
       //Parse hour and min variables to integer values
       this.minute = parseInt(this.minute);
       this.hour = parseInt(this.hour);
-    }
-    
-    get getDiff() {
         
-        if (this.hour < 10) {
-            this.hour = "0" + this.hour;
-        }
-        if (this.minute < 10) {
-            this.minute = "0" + this.minute;
-        }
-        
-        return this.hour + ':' + this.minute;
+        return this;
     }
-    
 };
 
 
 function calculate() {
     
-    //Exception: Is empty
+    var times_nodes = document.getElementsByClassName("times");
+    var times = [];
     
-    var temp1;
-    var temp2;
-    
-    debugger;
+    //Error handling: If empty
+    if (times_nodes[0].value == "" || times_nodes[1].value == "") {
+        throw "ERROR: Fields cannot be empty!";
+    }
     
     //Store into data structure
-    time_1 = new Time(document.getElementById("time-1").value);
-    time_2 = new Time(document.getElementById("time-2").value);
+    for (i = 0; i < times_nodes.length; i++) {
+        times[i] = new Time(times_nodes[i].value);
+    }
     
-    //Hour adjustment - do this later, check functionality first
+    //Fix numbers according to whether today is true or false (+24)
+    var selects = document.getElementsByClassName("time-selects");
+    for (i = 0; i < selects.length; i++) {
+        if (selects[i].value == "tomorrow")
+            times[i].hour += 24;
+    }
+    
+    //Error handling: If time1 > time 2
+    if (times[0].hour > times[1].hour) {
+        throw "ERROR: Time #1 cannot be greater than Time #2!";
+    } else if (times[0].hour == times[1].hour && times[0].minute > times[1].minute) {
+        throw "ERROR: Time #1 cannot be greater than Time #2!";
+    }
+    
+    
+    //Define temp/counter vars
+    var temp = [];
+    var i;
     
     //Convert to minutes
-    temp1 = (time_1.hour * 60) + time_1.minute;
-    temp2 = (time_2.hour * 60) + time_2.minute;
+    for (i = 0; i < times.length; i++) {
+        temp[i] = (times[i].hour * 60) + times[i].minute;
+        }
     
     //Calculation
-    temp1 = temp2 - temp1;
+    temp[0] = temp[1] - temp[0];
     
-    //Use calculation result to adjust numbers
-    time_1.hour = Math.floor(temp1/60);
-    time_1.minute = temp1 % 60;
-    time_1.meridian = undefined;
+    //Return string
+    return "Difference between the two times is " + Math.floor(temp[0]/60) + " hour(s) and " + temp[0] % 60 + " minute(s).";
     
-    //Automatic deallocation of all variables
+    //Deallocation of all variables
 }
 
 
-function test() {
-    calculate();
-    window.alert("Difference between two times is " + time_1.getDiff);
+function submit() {
+    try {
+    window.alert(calculate());
+        }
+    catch (e) {
+        alert(e);
+    }
 }
+
+function get_cur() {
+    var d = new Date();
+    var times = document.getElementsByClassName("times");
+    times[0].value = d.getHours() + ":" + d.getMinutes();
+    times[0].disabled = true;
+    
+    //spawn button that makes re-editable
+    
+}
+
+//Add EventListener to HTML elements
+document.getElementById("submit").addEventListener("click", submit);
+document.getElementById("get-cur").addEventListener("click", get_cur);
