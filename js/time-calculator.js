@@ -93,7 +93,18 @@ function submit() {
 function get_cur() {
     var d = new Date();
     var times = document.getElementsByClassName("times");
-    times[0].value = d.getHours() + ":" + d.getMinutes();
+    var hours = d.getHours();
+    var min = d.getMinutes();
+    
+    //Fix time to conform to input type requirements
+    if (hours < 10) {
+        hours = "0" + hours;
+    }
+    if (min < 10) {
+        min = "0" + min;
+    }
+    
+    times[0].value = hours + ":" + min;
     times[0].disabled = true;
     
     //spawn button that makes re-editable
