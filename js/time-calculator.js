@@ -91,6 +91,7 @@ function submit() {
 }
 
 function get_cur() {
+    var re_edit_spawn = false;
     var d = new Date();
     var times = document.getElementsByClassName("times");
     var hours = d.getHours();
@@ -108,6 +109,17 @@ function get_cur() {
     times[0].disabled = true;
     
     //spawn button that makes re-editable
+    
+    if (!re_edit_spawn) {
+        var get_cur = document.getElementById("get-cur");
+        var re_edit = document.createElement("button");
+        re_edit.innerHTML = "Use custom time";
+
+        get_cur.parentNode.insertBefore(re_edit,get_cur);
+        
+        re_edit_spawn = true;
+    }
+    //
     
 }
 
